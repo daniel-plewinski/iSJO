@@ -53,7 +53,7 @@ class AddTeacherType extends AbstractType
                     "label" => "Dodaj",
 
                     'attr' => [
-                        'class' => 'top-marg btn btn-primary',
+                        'class' => 'top-marg btn btn-primary button-top-margin',
                     ],
                 ]
             );

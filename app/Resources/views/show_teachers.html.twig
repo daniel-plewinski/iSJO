@@ -2,31 +2,45 @@
 
 
 {% block body %}
-    <h2>Lista nauczycieli</h2>
-    <a href="{{  path('add_teacher') }}"><button type="button" class="btn btn-success">Dodaj nauczyciela</button></a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>L.p.</th>
-            <th>Nazwisko i imię</th>
-            <th>Dodaj grupę</th>
-            <th>Edycja</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for element in teachers %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ element.name }}</td>
-                <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
-                        <button type="button" class="btn btn-info">Dodaj grupę</button>
-                    </a></td>
-                <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
-                        <button type="button" class="btn btn-warning">Edycja</button>
-                    </a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+
+    <div class="row">
+        <div class="col" style="text-align: left">
+            <h3>Lista nauczycieli</h3>
+        </div>
+        <div class="col" style="text-align: right">
+            <a href="{{ path('add_teacher') }}">
+                <button type="button" class="btn btn-outline-success button-bottom-margin">Dodaj nauczyciela</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Nazwisko i imię</th>
+                    <th>Dodaj grupę</th>
+                    <th>Edycja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for element in teachers %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ element.name }}</td>
+                        <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
+                                <button type="button" class="btn btn-info">Dodaj grupę</button>
+                            </a></td>
+                        <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
+                                <button type="button" class="btn btn-warning">Edycja</button>
+                            </a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

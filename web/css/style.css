@@ -1,0 +1,47 @@
+body {
+    background-color: #a2a2a2;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1080px;
+    }
+}
+
+.container {
+    padding-top: 5rem;
+    background-color: white;
+    min-height: 700px;
+}
+
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #7d7d7d;
+    border-color: #7d7d7d;
+}
+
+.button-bottom-margin {
+    margin-bottom: 15px;
+}
+
+.button-top-margin {
+    margin-top: 15px;
+}
+
+.bg-dark {
+    background-color: #05772e !important;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    border-top: 1px solid #ababab;
+}
