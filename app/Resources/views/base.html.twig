@@ -25,13 +25,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">iSJO</a>
+            <a class="navbar-brand" href="/">iSJO</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted("ROLE_SCHOOL") %}
                     <li><a href="/">Start</a></li>
-                    <li><a href="#">Dodaj osobę</a></li>
+                    <li><a href="{{ path('show_teachers') }}">Nauczyciele</a></li>
+                    <li><a href="#">Grupy</a></li>
+                    <li><a href="#">Rozliczenia</a></li>
                     <li><a href="/logout">Wyloguj się</a></li>
                 {% else %}
                     <li><a href="/register">Zarejestruj się</a></li>

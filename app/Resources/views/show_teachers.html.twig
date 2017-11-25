@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h2>Lista nauczycieli</h2>
+    <a href="{{  path('add_teacher') }}"><button type="button" class="btn btn-success">Dodaj nauczyciela</button></a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>L.p.</th>
+            <th>Nazwisko i imię</th>
+            <th>Dodaj grupę</th>
+            <th>Edycja</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in teachers %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ element.name }}</td>
+                <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
+                        <button type="button" class="btn btn-info">Dodaj grupę</button>
+                    </a></td>
+                <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
+                        <button type="button" class="btn btn-warning">Edycja</button>
+                    </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

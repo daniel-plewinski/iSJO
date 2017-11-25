@@ -24,7 +24,7 @@ class SchoolController extends Controller
     {
         $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
-        return new Response("Witaj Szkoło");
+        return $this->render("index_school.html.twig");
     }
 
     /**
@@ -66,9 +66,23 @@ class SchoolController extends Controller
             $em->persist($newTeacher);
             $em->flush();
 
-            return $this->render("add_teacher.html.twig", ['form' => $form->createView(), 'password'=> $password]);
+            return $this->render("teacher_added.html.twig", ['newTeacher'=>$newTeacher, 'password' => $password]);
         }
 
         return $this->render("add_teacher.html.twig", ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/show-teachers", name="show_teachers")
+     * @return Response
+     */
+    public function showTeachersAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $teachers = $em->getRepository('AppBundle:User')
+            ->findBySchoolId($this->getUser()->getId());
+
+        return $this->render("show_teachers.html.twig", ['teachers' => $teachers]);
     }
 }

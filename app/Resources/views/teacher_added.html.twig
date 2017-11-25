@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <h2>Dodano nauczyciela</h2>
+
+    <p>Ta strona wyświetla się tylko 1 raz po dodaniu nauczyciela. Zapisz wygenerowane losowo hasło tymczasowe i
+    przekaż je nauczycielowi. Powinien on zmienić je na własne.</p>
+
+    <p>Imię i nazwisko: {{ newTeacher.getName() }}</p>
+    <p>Login: {{ newTeacher.getUserName() }}</p>
+    <p>Hasło: {{ password }}</p>
+
+    <a href="{{  path('show_teachers') }}"><button type="button" class="btn btn-primary">Powrót do listy nauczycieli</button></a>
+
+{% endblock %}
