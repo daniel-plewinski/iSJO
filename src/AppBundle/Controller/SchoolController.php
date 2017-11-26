@@ -24,7 +24,13 @@ class SchoolController extends Controller
     {
         $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
-        return $this->render("index_school.html.twig");
+
+        $em = $this->getDoctrine()->getManager();
+        $teachers = $em->getRepository('AppBundle:User')
+            ->findBySchoolId($this->getUser()->getId());
+        $teacherNo = count($teachers);
+
+        return $this->render("index_school.html.twig", ['teacherNo' => $teacherNo]);
     }
 
     /**
@@ -66,7 +72,7 @@ class SchoolController extends Controller
             $em->persist($newTeacher);
             $em->flush();
 
-            return $this->render("teacher_added.html.twig", ['newTeacher'=>$newTeacher, 'password' => $password]);
+            return $this->render("teacher_added.html.twig", ['newTeacher' => $newTeacher, 'password' => $password]);
         }
 
         return $this->render("add_teacher.html.twig", ['form' => $form->createView()]);
@@ -85,4 +91,22 @@ class SchoolController extends Controller
 
         return $this->render("show_teachers.html.twig", ['teachers' => $teachers]);
     }
+
+
+    /**
+     * @Route("/show-groups", name="show_groups")
+     * @return Response
+     */
+    public function showGroupsAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $teachers = $em->getRepository('AppBundle:User')
+            ->findBySchoolId($this->getUser()->getId());
+
+        return $this->render("show_groups.html.twig", ['teachers' => $teachers]);
+    }
+
+
+
 }

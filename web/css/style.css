@@ -8,7 +8,7 @@ body {
     }
 }
 
-.container {
+.container-white {
     padding-top: 5rem;
     background-color: white;
     min-height: 700px;
@@ -17,12 +17,6 @@ body {
 .starter-template {
     padding: 3rem 1.5rem;
     text-align: center;
-}
-
-.table .thead-dark th {
-    color: #fff;
-    background-color: #7d7d7d;
-    border-color: #7d7d7d;
 }
 
 .button-bottom-margin {
@@ -44,4 +38,37 @@ body {
 .table td, .table th {
     vertical-align: middle;
     border-top: 1px solid #ababab;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
+}
+
+.jumbotron-low {
+    padding: 1rem 2rem;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+.display-4 {
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: .1rem;
+    margin-top: .4rem;
+}
+
+footer {
+    color: white;
+    padding-top: 5px;
+}
+
+.min-height {
+    min-height: 550px;
 }

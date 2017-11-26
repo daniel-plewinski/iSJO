@@ -22,7 +22,7 @@ class AddTeacherType extends AbstractType
                 [
                     'label' => "e-mail",
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => ' form-control',
                     ],
                 ]
             )

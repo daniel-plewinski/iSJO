@@ -3,9 +3,34 @@
 
 {% block body %}
 
- <h1>Dodawanie nauczyciela</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Dodawanie nauczyciela
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-file"></i> Lista nauczycieli
+                </li>
+            </ol>
+        </div>
+
+        <p>Wpisz dane nowego nauczyciela. Hasło zostanie wygenerowane automatycznie i zostanie pokazane na następnej
+            stronie. Przekaż dane logowania nauczycielowi i zaleć zmianę hasła na własne.</p>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+    </div>
 
 {% endblock %}
