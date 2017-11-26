@@ -35,9 +35,8 @@ body {
     cursor: pointer;
 }
 
-.table td, .table th {
-    vertical-align: middle;
-    border-top: 1px solid #ababab;
+.table>tbody>tr>td, .table>tbody>tr>th {
+    vertical-align: middle !important;
 }
 
 .navbar-dark .navbar-toggler-icon {

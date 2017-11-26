@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Lista nauczycieli
+                </h2>
+            </div><div class="col-md-2">
+
+                <h2><a href="{{ path('add_teacher') }}"><button type="button" class="btn btn-info">Dodaj nauczyciela</button></a></h2>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-file"></i> Lista nauczycieli
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <thead class="thead">
+                <tr>
+                    <th>L.p.</th>
+                    <th>Nazwisko i imię</th>
+                    <th>Dodaj kurs</th>
+                    <th>Edycja</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for element in teachers %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ element.name }}</td>
+                        <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
+                                <button type="button" class="btn btn-info">Dodaj kurs</button>
+                            </a></td>
+                        <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
+                                <button type="button" class="btn btn-warning">Edycja</button>
+                            </a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

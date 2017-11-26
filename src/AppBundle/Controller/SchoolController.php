@@ -94,10 +94,10 @@ class SchoolController extends Controller
 
 
     /**
-     * @Route("/show-groups", name="show_groups")
+     * @Route("/show-courses", name="show_courses")
      * @return Response
      */
-    public function showGroupsAction()
+    public function showCoursesAction()
     {
 
         $em = $this->getDoctrine()->getManager();

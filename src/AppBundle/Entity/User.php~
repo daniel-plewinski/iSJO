@@ -58,4 +58,28 @@ class User extends BaseUser
     {
         return $this->name;
     }
+
+    /**
+     * Set schoolId
+     *
+     * @param integer $schoolId
+     *
+     * @return User
+     */
+    public function setSchoolId($schoolId)
+    {
+        $this->schoolId = $schoolId;
+
+        return $this;
+    }
+
+    /**
+     * Get schoolId
+     *
+     * @return integer
+     */
+    public function getSchoolId()
+    {
+        return $this->schoolId;
+    }
 }
