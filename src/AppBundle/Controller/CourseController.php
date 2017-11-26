@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class SchoolController
@@ -28,10 +27,7 @@ class CourseController extends Controller
         $newCourse = new Course();
         $form = $this->createForm(AddCourseType::class, $newCourse, ['user' => $this->getUser()]);
 
-
-
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted()) {
 
@@ -39,45 +35,39 @@ class CourseController extends Controller
 
             $schoolId = $this->getUser()->getId();
 
+            $teacherId = $newCourse->getTeacherId()->getId();
+
+            $uniqueNumber =  $newCourse->getCourseName() . '-' . time();
+
+            $newCourse->setCourseName($uniqueNumber);
+            $newCourse->setSchoolId($schoolId);
+            $newCourse->setTeacherId($teacherId);
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($newCourse);
             $em->flush();
 
-            return $this->render("teacher_added.html.twig", []);
+            return $this->render("show_courses.html.twig", []);
         }
 
-        return $this->render("add_teacher.html.twig", ['form' => $form->createView()]);
-    }
-
-    /**
-     * @Route("/show-teachers", name="show_teachers")
-     * @return Response
-     */
-    public function showTeachersAction()
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $teachers = $em->getRepository('AppBundle:User')
-            ->findBySchoolId($this->getUser()->getId());
-
-        return $this->render("show_teachers.html.twig", ['teachers' => $teachers]);
+        return $this->render("add_course.html.twig", ['form' => $form->createView()]);
     }
 
 
-    /**
-     * @Route("/show-courses", name="show_courses")
-     * @return Response
-     */
-    public function showCoursesAction()
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $teachers = $em->getRepository('AppBundle:User')
-            ->findBySchoolId($this->getUser()->getId());
-
-        return $this->render("show_groups.html.twig", ['teachers' => $teachers]);
-    }
-
+//    /**
+//     * @Route("/show-courses", name="show_courses")
+//     * @return Response
+//     */
+//    public function showCoursesAction()
+//    {
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $courses = $em->getRepository('AppBundle:Course')
+//            ->findBySchoolId($this->getUser()->getId());
+//
+//        return $this->render("show_courses.html.twig", ['courses' => $courses]);
+//    }
 
 
 }

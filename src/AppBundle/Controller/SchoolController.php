@@ -101,12 +101,18 @@ class SchoolController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
+        $courses = $em->getRepository('AppBundle:Course')
+            ->findBySchoolId($this->getUser()->getId());
+
         $teachers = $em->getRepository('AppBundle:User')
             ->findBySchoolId($this->getUser()->getId());
 
-        return $this->render("show_groups.html.twig", ['teachers' => $teachers]);
+        $teacherAr = [];
+
+        foreach ($teachers as $index => $teacher) {
+            $teacherAr[$teachers[$index]->getId()] = $teachers[$index]->getName();
+        }
+
+        return $this->render("show_courses.html.twig", ['courses' => $courses, 'teacherAr'=> $teacherAr]);
     }
-
-
-
 }

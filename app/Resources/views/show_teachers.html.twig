@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-10">
                 <h2>
-                    Lista kursów
+                    Lista nauczycieli
                 </h2>
             </div><div class="col-md-2">
 
@@ -24,7 +24,7 @@
                     <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-file"></i> Lista kursów
+                    <i class="fa fa-file"></i> Lista nauczycieli
                 </li>
             </ol>
         </div>
@@ -36,20 +36,19 @@
                 <thead class="thead">
                 <tr>
                     <th>L.p.</th>
-                    <th>Nazwa kursu</th>
-                    <th>Przedmiot</th>
-                    <th>Nauczyciel</th>
+                    <th>Nazwisko i imię</th>
+                    <th>Dodaj kurs</th>
                     <th>Edycja</th>
                 </tr>
                 </thead>
                 <tbody>
-
-                {% for element in courses %}
+                {% for element in teachers %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ element.courseName }}</td>
-                        <td>{{ element.subject }}</td>
-                        <td>{{ attribute(teacherAr, element.teacherId) }}</td>
+                        <td>{{ element.name }}</td>
+                        <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
+                                <button type="button" class="btn btn-info">Dodaj kurs</button>
+                            </a></td>
                         <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
                                 <button type="button" class="btn btn-warning">Edycja</button>
                             </a></td>

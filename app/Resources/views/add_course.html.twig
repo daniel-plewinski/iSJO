@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Dodawanie kursu
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Dodawanie kursu</a>
+                </li>
+            </ol>
+        </div>
+
+        <p>Do nazwy kursu automatycznie dodawany jest unikalny numer aby nazwa nie mogła się powtarzać</p>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
