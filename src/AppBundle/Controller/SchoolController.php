@@ -29,8 +29,11 @@ class SchoolController extends Controller
         $teachers = $em->getRepository('AppBundle:User')
             ->findBySchoolId($this->getUser()->getId());
         $teacherNo = count($teachers);
+        $courses = $em->getRepository('AppBundle:Course')
+            ->findBySchoolId($this->getUser()->getId());
+        $courseNo = count($courses);
 
-        return $this->render("index_school.html.twig", ['teacherNo' => $teacherNo]);
+        return $this->render("index_school.html.twig", ['teacherNo' => $teacherNo, 'courseNo' => $courseNo]);
     }
 
     /**

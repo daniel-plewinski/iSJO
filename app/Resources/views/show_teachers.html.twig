@@ -46,7 +46,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ element.name }}</td>
-                        <td><a href=" {{ path('show_teachers') }}show/{{ element.id }}">
+                        <td><a href=" {{ path('add_course_id', {'id': element.id}) }}">
                                 <button type="button" class="btn btn-info">Dodaj kurs</button>
                             </a></td>
                         <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">

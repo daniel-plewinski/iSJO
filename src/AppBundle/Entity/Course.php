@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,12 @@ class Course
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lesson", mappedBy="course")
+     */
+    private $lessons;
 
 
     /**
@@ -47,6 +54,11 @@ class Course
      * @ORM\Column(name="subject", type="string", length=50)
      */
     private $subject;
+
+
+    public function __construct() {
+        $this->lessons = new ArrayCollection();
+    }
 
 
     /**
@@ -153,5 +165,39 @@ class Course
     public function getTeacherId()
     {
         return $this->teacherId;
+    }
+
+    /**
+     * Add lesson
+     *
+     * @param \AppBundle\Entity\Lesson $lesson
+     *
+     * @return Course
+     */
+    public function addLesson(\AppBundle\Entity\Lesson $lesson)
+    {
+        $this->lessons[] = $lesson;
+
+        return $this;
+    }
+
+    /**
+     * Remove lesson
+     *
+     * @param \AppBundle\Entity\Lesson $lesson
+     */
+    public function removeLesson(\AppBundle\Entity\Lesson $lesson)
+    {
+        $this->lessons->removeElement($lesson);
+    }
+
+    /**
+     * Get lessons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLessons()
+    {
+        return $this->lessons;
     }
 }

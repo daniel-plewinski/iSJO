@@ -4,19 +4,20 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
+<form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
     {% if csrf_token %}
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
     {% endif %}
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+    <h2 class="form-signin-heading">Logowanie do iSJO</h2>
+    <input type="text" class="form-control" placeholder="Nazwa użytkownika" id="username" name="_username"
+           value="{{ last_username }}" required="required" autofocus=""/>
+    <input type="password" class="form-control" placeholder="Hasło" id="password" name="_password" required="required"/>
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+    <label for="remember_me">{{ 'Zapamiętaj mnie'|trans }}</label>
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    <input type="submit" class="btn btn-lg btn-success btn-block" id="_submit" name="_submit" value="{{ 'Dalej'|trans }}"/>
+    <br>
+    <center><a href="{{ path("fos_user_registration_register") }}">Rejestracja</a></center>
 </form>
