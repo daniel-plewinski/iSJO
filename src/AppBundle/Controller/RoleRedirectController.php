@@ -23,8 +23,9 @@ class RoleRedirectController extends Controller
 
             return $this->redirectToRoute("index_school");
 
-        } else {
-            return new Response("Nie Jesteś szkołą");
+        } elseif ($this->get('security.authorization_checker')->isGranted('ROLE_TEACHER')) {
+
+            return $this->redirectToRoute("index_teacher");
         }
     }
 }

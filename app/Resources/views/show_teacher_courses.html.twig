@@ -7,17 +7,10 @@
 
         <!-- Page Heading -->
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h2>
-                    Lista kursów
+                    Moje kursy
                 </h2>
-            </div>
-            <div class="col-md-2">
-
-                <h2><a href="{{ path('add_course') }}">
-                        <button type="button" class="btn btn-info">Dodaj kurs</button>
-                    </a></h2>
-
             </div>
         </div>
 
@@ -27,7 +20,7 @@
                     <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-file"></i> Lista kursów
+                    <i class="fa fa-file"></i> Moje kursy
                 </li>
             </ol>
         </div>
@@ -40,10 +33,7 @@
                 <tr>
                     <th>L.p.</th>
                     <th>Nazwa kursu</th>
-                    <th class="hidden-xs hidden-sm">Przedmiot</th>
-                    <th>Nauczyciel</th>
-                    <th>Lekcje</th>
-                    <th class="hidden-xs hidden-sm">Edycja</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,14 +42,8 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ element.courseName }}</td>
-                        <td class="hidden-xs hidden-sm">{{ element.subject }}</td>
-                        <td>{{ attribute(teacherAr, element.teacherId) }}</td>
                         <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
-                                <button type="button" class="btn btn-info">Lekcje</button>
-                            </a></td>
-                        <td class="hidden-xs hidden-sm"><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
-                                <button type="button" class="btn btn-warning">Edycja</button>
-                            </a></td>
+                                <button type="button" class="btn btn-warning">Dodaj lekcje</button></td>
 
                     </tr>
                 {% endfor %}

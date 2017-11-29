@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/sb-admin.css') }}"/>
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css"/>
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/blog-home.css') }}"/>
@@ -42,7 +44,8 @@
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ app.user.name }} <b
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                            class="fa fa-user"></i> {{ app.user.name }} <b
                             class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
@@ -58,17 +61,36 @@
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
-                <li>
-                    <a href="{{ path('index_school') }}"><i class="fa fa-fw fa-dashboard"></i> Podsumowanie</a>
-                </li>
-                <li>
-                    <a href="{{ path('show_teachers') }}"><i class="fa fa-fw fa-user-circle"></i> Nauczyciele</a>
-                </li>
-                <li>
-                    <a href="{{ path('show_courses') }}"><i class="fa fa-fw fa-table"></i> Kursy</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-edit"></i> Rozliczenia</a>
+
+                {% if is_granted("ROLE_SCHOOL") %}
+                    <li>
+                        <a href="{{ path('index_school') }}"><i class="fa fa-fw fa-dashboard"></i> Podsumowanie</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('show_teachers') }}"><i class="fa fa-fw fa-user-circle"></i> Nauczyciele</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('show_courses') }}"><i class="fa fa-fw fa-table"></i> Kursy</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-edit"></i> Rozliczenia</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ path('index_teacher') }}"><i class="fa fa-fw fa-dashboard"></i> Podsumowanie</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('show_teacher_courses') }}"><i class="fa fa-fw fa-table"></i> Moje kursy</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('add_teacher_lesson') }}"><i class="fa fa-fw fa-table"></i> Dodaj lekcje</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-edit"></i> Rozliczenia</a>
+                    </li>
+                {% endif %}
+
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -125,14 +147,13 @@
 {#</div>#}
 {#</nav>#}
 
-
+{% block javascripts %}
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/extra.js') }}"></script>
-
-
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+{% endblock %}
 
 </body>
 </html>

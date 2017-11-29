@@ -60,7 +60,6 @@ class Course
         $this->lessons = new ArrayCollection();
     }
 
-
     /**
      * Get id
      *
@@ -166,6 +165,8 @@ class Course
     {
         return $this->teacherId;
     }
+
+
 
     /**
      * Add lesson

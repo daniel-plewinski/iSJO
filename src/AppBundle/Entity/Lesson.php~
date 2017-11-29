@@ -22,7 +22,7 @@ class Lesson
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Lesson", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="lessons")
      */
     private $course;
 
@@ -84,11 +84,11 @@ class Lesson
     /**
      * Set course
      *
-     * @param \AppBundle\Entity\Lesson $course
+     * @param \AppBundle\Entity\Course $course
      *
      * @return Lesson
      */
-    public function setCourse(\AppBundle\Entity\Lesson $course = null)
+    public function setCourse(Course $course = null)
     {
         $this->course = $course;
 
@@ -103,5 +103,53 @@ class Lesson
     public function getCourse()
     {
         return $this->course;
+    }
+
+    /**
+     * Set schoolId
+     *
+     * @param integer $schoolId
+     *
+     * @return Lesson
+     */
+    public function setSchoolId($schoolId)
+    {
+        $this->schoolId = $schoolId;
+
+        return $this;
+    }
+
+    /**
+     * Get schoolId
+     *
+     * @return integer
+     */
+    public function getSchoolId()
+    {
+        return $this->schoolId;
+    }
+
+    /**
+     * Set teacherId
+     *
+     * @param integer $teacherId
+     *
+     * @return Lesson
+     */
+    public function setTeacherId($teacherId)
+    {
+        $this->teacherId = $teacherId;
+
+        return $this;
+    }
+
+    /**
+     * Get teacherId
+     *
+     * @return integer
+     */
+    public function getTeacherId()
+    {
+        return $this->teacherId;
     }
 }

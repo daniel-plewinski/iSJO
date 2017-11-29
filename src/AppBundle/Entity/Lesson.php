@@ -22,7 +22,7 @@ class Lesson
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Lesson", inversedBy="lessons")
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="lessons")
      */
     private $course;
 
@@ -84,11 +84,11 @@ class Lesson
     /**
      * Set course
      *
-     * @param \AppBundle\Entity\Lesson $course
+     * @param \AppBundle\Entity\Course $course
      *
      * @return Lesson
      */
-    public function setCourse(\AppBundle\Entity\Lesson $course = null)
+    public function setCourse(Course $course = null)
     {
         $this->course = $course;
 

@@ -71,3 +71,7 @@ footer {
 .min-height {
     min-height: 550px;
 }
+
+.navbar-brand {
+    color: #ffffff !important;
+}
