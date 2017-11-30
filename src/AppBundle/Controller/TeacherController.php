@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Course;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,8 +35,20 @@ class TeacherController extends Controller
         $courses = $em->getRepository('AppBundle:Course')
             ->findByTeacherId($this->getUser()->getId());
 
-
         return $this->render("show_teacher_courses.html.twig", ['courses' => $courses]);
     }
 
+
+    /**
+     * @Route("/{id}/show-lessons", name="show_lessons")
+     * @return Response
+     */
+    public function showLessonsAction(Course $course)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lessons = $em->getRepository('AppBundle:Lesson')
+            ->findBy(['course'=> $course], ['date' => 'DESC']);
+
+        return $this->render("show_lessons.html.twig", ['lessons' => $lessons]);
+    }
 }

@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>
-                    Moje kursy
+                    Lekcje
                 </h2>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-file"></i> Moje kursy
+                    <i class="fa fa-file"></i> Lekcje
                 </li>
             </ol>
         </div>
@@ -32,24 +32,19 @@
                 <thead class="thead">
                 <tr>
                     <th>L.p.</th>
-                    <th>Nazwa kursu</th>
-                    <th></th>
+                    <th>Data lekcji</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for element in courses %}
+                {% for element in lessons %}
                     <tr>
                         <td>{{ loop.index }}</td>
-                        <td>{{ element.courseName }}</td>
-                        <td><a href=" {{ path('show_lessons', {'id' : element.id }) }}">
-                                <button type="button" class="btn btn-info">Zobacz lekcje</button>
+                        <td>{{ element.date |date('d-m-Y') }}</td>
+                        <td><a href=" {{ path('delete_teacher_lesson_course', {'id':  element.id }) }}">
+                                <button type="button" class="btn btn-danger">Usuń</button>
                             </a></td>
-                        <td><a href=" {{ path('add_teacher_lesson_course', {'id' : element.id }) }}">
-                                <button type="button" class="btn btn-warning">Dodaj lekcje</button>
-                            </a></td>
-
                     </tr>
                 {% endfor %}
                 </tbody>
