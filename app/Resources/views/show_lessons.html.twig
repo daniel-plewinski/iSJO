@@ -1,56 +1,62 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
 
     <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="row">
-            <div class="col-md-12">
-                <h2>
-                    Lekcje
-                </h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
-                </li>
-                <li class="active">
-                    <i class="fa fa-file"></i> Lekcje
-                </li>
-            </ol>
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                Lekcje
+            </h2>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
-            <table class="table">
-                <thead class="thead">
-                <tr>
-                    <th>L.p.</th>
-                    <th>Data lekcji</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for element in lessons %}
-                    <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ element.date |date('d-m-Y') }}</td>
-                        <td><a href=" {{ path('delete_teacher_lesson_course', {'id':  element.id }) }}">
-                                <button type="button" class="btn btn-danger">Usuń</button>
-                            </a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        <ol class="breadcrumb">
+            <li>
+                <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-file"></i> Lekcje
+            </li>
+        </ol>
     </div>
+    <div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Możesz usuwać tylko lekcje dodane tego samego dnia. Jeśli musisz usunąć wcześniejszą lekcję - napisz
+                    do
+                    administratora szkoły.</p>
+                <h4>Kurs {{ courseName }}</h4>
+                <table class="table">
+                    <thead class="thead">
+                    <tr>
+                        <th>L.p.</th>
+                        <th>Data lekcji</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for element in pagination %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ element.date |date('d-m-Y') }}</td>
+                            <td><a href=" {{ path('delete_teacher_lesson_course', {'id':  element.id }) }}">
+                                    <button type="button" class="btn btn-danger">Usuń</button>
+                                </a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
     </div>
 
 

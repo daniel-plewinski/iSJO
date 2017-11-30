@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -41,14 +42,27 @@ class TeacherController extends Controller
 
     /**
      * @Route("/{id}/show-lessons", name="show_lessons")
+     * @param Request $request
+     * @param Course $course
      * @return Response
      */
-    public function showLessonsAction(Course $course)
+    public function showLessonsAction(Request $request, Course $course)
     {
-        $em = $this->getDoctrine()->getManager();
-        $lessons = $em->getRepository('AppBundle:Lesson')
-            ->findBy(['course'=> $course], ['date' => 'DESC']);
+        $courseId = $course->getId();
 
-        return $this->render("show_lessons.html.twig", ['lessons' => $lessons]);
+        // Cannot user repository as is not supported by knp_paginator
+        $em    = $this->get('doctrine.orm.entity_manager');
+        $dql   = "SELECT u FROM AppBundle:Lesson u WHERE u.course = $courseId";
+        $lessons = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($lessons, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            3/*limit per page*/
+        );
+
+        $courseName = $course->getCourseName();
+
+        return $this->render("show_lessons.html.twig", ['lessons' => $lessons, 'courseName' => $courseName, 'pagination' => $pagination]);
     }
 }
