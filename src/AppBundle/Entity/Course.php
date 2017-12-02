@@ -64,7 +64,14 @@ class Course
     private $totalLessons;
 
 
-    public function __construct() {
+    /**
+     * @ORM\Column(name="teacher_rate", type="decimal", precision=7, scale=2)
+     */
+    protected $teacherRate;
+
+
+    public function __construct()
+    {
         $this->lessons = new ArrayCollection();
     }
 
@@ -175,7 +182,6 @@ class Course
     }
 
 
-
     /**
      * Add lesson
      *
@@ -232,5 +238,26 @@ class Course
     public function getTotalLessons()
     {
         return $this->totalLessons;
+    }
+
+    /**
+     * Set teacherRate
+     *
+     * @return Course
+     */
+    public function setTeacherRate($teacherRate)
+    {
+        $this->teacherRate = $teacherRate;
+
+        return $this;
+    }
+
+    /**
+     * Get teacherRate
+     *
+     */
+    public function getTeacherRate()
+    {
+        return $this->teacherRate;
     }
 }

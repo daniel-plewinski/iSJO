@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -74,6 +75,18 @@ class AddCourseType extends AbstractType
 
                     'attr' => [
                         'class' => ' form-control',
+                    ],
+                ]
+            )
+            ->add(
+                'teacherRate',
+                NumberType::class,
+                [
+                    'label' => "Stawka nauczyciela za 1 lekcję",
+                    'attr' => [
+                        'class' => 'form-control currency',
+                        'max' => 90,
+                        'step' => 0.01,
                     ],
                 ]
             )

@@ -59,7 +59,7 @@
                         <td>{{ element.totalLessons }}</td>
                         <td class="hidden-xs hidden-sm">{{ element.subject }}</td>
                         <td>{{ attribute(teacherAr, element.teacherId) }}</td>
-                        <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
+                        <td><a href=" {{ path('shows_school_lessons', {'id':  element.id }) }}">
                                 <button type="button" class="btn btn-info">Lekcje</button>
                             </a></td>
                         <td class="hidden-xs hidden-sm"><a href=" {{ path('edit_course', {'id':  element.id }) }}">

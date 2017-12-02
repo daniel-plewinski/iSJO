@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Course;
 use AppBundle\Form\AddTeacherType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -156,5 +157,35 @@ class SchoolController extends Controller
         }
 
         return $this->render("show_courses.html.twig", ['pagination' => $pagination, 'teacherAr'=> $teacherAr]);
+    }
+
+    /**
+     * @Route("/{id}/show-lessons", name="shows_school_lessons")
+     * @param Request $request
+     * @param Course $course
+     * @return Response
+     */
+    public function showLessonsAction(Request $request, Course $course)
+    {
+        $courseId = $course->getId();
+
+        // Cannot user repository as is not supported by knp_paginator
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT u FROM AppBundle:Lesson u WHERE u.course = $courseId";
+        $lessons = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $lessons, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+        $courseName = $course->getCourseName();
+
+        return $this->render(
+            "show_school_lessons.html.twig",
+            ['lessons' => $lessons, 'courseName' => $courseName, 'pagination' => $pagination]
+        );
     }
 }

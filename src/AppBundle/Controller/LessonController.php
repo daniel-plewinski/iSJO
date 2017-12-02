@@ -147,4 +147,28 @@ class LessonController extends Controller
 
         return $this->redirectToRoute('show_lessons', ['id' => $courseId]);
     }
+
+    /**
+     * @Route("/school/{id}/delete-lesson", name="delete_school_lesson_course")
+     * @param $id
+     * @return Response
+     */
+    public function deleteSchoolLessonCourse($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $lesson = $em->getRepository('AppBundle:Lesson')->find($id);
+
+        $courseId = $lesson->getCourse()->getId();
+
+        if (!$lesson) {
+
+            return $this->redirectToRoute('shows_school_lessons', ['id' => $courseId]);
+
+        }
+
+        $em->remove($lesson);
+        $em->flush();
+
+        return $this->redirectToRoute('shows_school_lessons', ['id' => $courseId]);
+    }
 }
