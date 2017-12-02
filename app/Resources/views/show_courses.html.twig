@@ -40,24 +40,29 @@
                 <tr>
                     <th>L.p.</th>
                     <th>Nazwa kursu</th>
+                    <th>Kod</th>
+                    <th>Lekcji</th>
                     <th class="hidden-xs hidden-sm">Przedmiot</th>
                     <th>Nauczyciel</th>
-                    <th>Lekcje</th>
-                    <th class="hidden-xs hidden-sm">Edycja</th>
+
+                    <th></th>
+                    <th class="hidden-xs hidden-sm"></th>
                 </tr>
                 </thead>
                 <tbody>
 
-                {% for element in courses %}
+                {% for element in pagination %}
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ element.courseName }}</td>
+                        <td>{{ element.id }}</td>
+                        <td>{{ element.totalLessons }}</td>
                         <td class="hidden-xs hidden-sm">{{ element.subject }}</td>
                         <td>{{ attribute(teacherAr, element.teacherId) }}</td>
                         <td><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
                                 <button type="button" class="btn btn-info">Lekcje</button>
                             </a></td>
-                        <td class="hidden-xs hidden-sm"><a href=" {{ path('show_teachers', {'id':  element.id }) }}">
+                        <td class="hidden-xs hidden-sm"><a href=" {{ path('edit_course', {'id':  element.id }) }}">
                                 <button type="button" class="btn btn-warning">Edycja</button>
                             </a></td>
 
@@ -65,6 +70,12 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {# display navigation #}
+            <div class="navigation">
+                <div class="text-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
         </div>
     </div>
     </div>

@@ -81,6 +81,33 @@ class SchoolController extends Controller
         return $this->render("add_teacher.html.twig", ['form' => $form->createView()]);
     }
 
+
+    /**
+     * @Route("/edit-teacher/{id}", name="edit_teacher")
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function editTeacherAction(Request $request, User $user)
+    {
+
+        $form = $this->createForm(AddTeacherType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $newTeacher = $form->getData();
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($newTeacher);
+            $em->flush();
+
+            return $this->render("teacher_added.html.twig", ['newTeacher' => $newTeacher]);
+        }
+
+        return $this->render("add_teacher.html.twig", ['form' => $form->createView()]);
+    }
+
     /**
      * @Route("/show-teachers", name="show_teachers")
      * @return Response
@@ -98,14 +125,26 @@ class SchoolController extends Controller
 
     /**
      * @Route("/show-courses", name="show_courses")
+     * @param Request $request
      * @return Response
      */
-    public function showCoursesAction()
+    public function showCoursesAction(Request $request)
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $courses = $em->getRepository('AppBundle:Course')
-            ->findBySchoolId($this->getUser()->getId());
+        // Cannot user repository as is not supported by knp_paginator
+        $schoolId = $this->getUser()->getId();
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT u FROM AppBundle:Course u WHERE u.schoolId = $schoolId";
+        $courses = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $courses, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5/*limit per page*/
+        );
+
 
         $teachers = $em->getRepository('AppBundle:User')
             ->findBySchoolId($this->getUser()->getId());
@@ -116,6 +155,6 @@ class SchoolController extends Controller
             $teacherAr[$teachers[$index]->getId()] = $teachers[$index]->getName();
         }
 
-        return $this->render("show_courses.html.twig", ['courses' => $courses, 'teacherAr'=> $teacherAr]);
+        return $this->render("show_courses.html.twig", ['pagination' => $pagination, 'teacherAr'=> $teacherAr]);
     }
 }

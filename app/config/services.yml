@@ -38,3 +38,13 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    twig.app_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments:
+            - '@time_validator'
+        tags: ['twig.extension']
+
+    time_validator:
+        class: AppBundle\Validation\TimeValidator
+

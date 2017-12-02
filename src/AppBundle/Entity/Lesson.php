@@ -42,9 +42,18 @@ class Lesson
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_added", type="datetime")
+     */
+    private $dateAdded;
 
 
     /**
@@ -151,5 +160,29 @@ class Lesson
     public function getTeacherId()
     {
         return $this->teacherId;
+    }
+
+    /**
+     * Set dateAdded
+     *
+     * @param \DateTime $dateAdded
+     *
+     * @return Lesson
+     */
+    public function setDateAdded($dateAdded)
+    {
+        $this->dateAdded = $dateAdded;
+
+        return $this;
+    }
+
+    /**
+     * Get dateAdded
+     *
+     * @return \DateTime
+     */
+    public function getDateAdded()
+    {
+        return $this->dateAdded;
     }
 }

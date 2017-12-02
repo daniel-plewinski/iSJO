@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 
-class AddCourseType extends AbstractType
+class EditCourseType extends AbstractType
 {
     private $user;
 
@@ -21,8 +21,6 @@ class AddCourseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['user'];
-
-        $user = $user->getId();
 
         $this->user = $user;
 
@@ -69,9 +67,8 @@ class AddCourseType extends AbstractType
                             ->where('u.schoolId = ?1')
                             ->setParameter(1, $this->user);
                     },
-                    'label' => 'Kurs poprowadzi nauczyciel',
+                    'label' => 'Kurs prowadzi nauczyciel',
                     'choice_label' => 'name',
-
                     'attr' => [
                         'class' => ' form-control',
                     ],
@@ -81,7 +78,7 @@ class AddCourseType extends AbstractType
                 "submit",
                 SubmitType::class,
                 [
-                    "label" => "Dodaj kurs",
+                    "label" => "Zapisz zmiany",
 
                     'attr' => [
                         'class' => 'top-marg btn btn-primary button-top-margin',

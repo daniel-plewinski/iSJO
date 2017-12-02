@@ -51,18 +51,22 @@ class TeacherController extends Controller
         $courseId = $course->getId();
 
         // Cannot user repository as is not supported by knp_paginator
-        $em    = $this->get('doctrine.orm.entity_manager');
-        $dql   = "SELECT u FROM AppBundle:Lesson u WHERE u.course = $courseId";
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT u FROM AppBundle:Lesson u WHERE u.course = $courseId";
         $lessons = $em->createQuery($dql);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($lessons, /* query NOT result */
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $lessons, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            3/*limit per page*/
+            10/*limit per page*/
         );
 
         $courseName = $course->getCourseName();
 
-        return $this->render("show_lessons.html.twig", ['lessons' => $lessons, 'courseName' => $courseName, 'pagination' => $pagination]);
+        return $this->render(
+            "show_lessons.html.twig",
+            ['lessons' => $lessons, 'courseName' => $courseName, 'pagination' => $pagination]
+        );
     }
 }

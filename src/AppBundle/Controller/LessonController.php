@@ -6,6 +6,7 @@ use AppBundle\Entity\Course;
 use AppBundle\Entity\Lesson;
 use AppBundle\Form\CourseLessonType;
 use AppBundle\Form\TeacherLessonType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,11 @@ class LessonController extends Controller
             $teacherId = $this->getUser()->getId();
 
             $newLesson->setTeacherId($teacherId);
+
+            $dateAdded = new DateTime();
+            $dateAdded->format('Y-m-d H:i:s');
+
+            $newLesson->setDateAdded($dateAdded);
 
             $em = $this->getDoctrine()->getManager();
 
@@ -85,6 +91,11 @@ class LessonController extends Controller
 
             $newLesson->setCourse($course);
 
+            $dateAdded = new DateTime();
+            $dateAdded->format('Y-m-d H:i:s');
+
+            $newLesson->setDateAdded($dateAdded);
+
             $schoolId = $teacher->getSchoolId();
             $newLesson->setSchoolId($schoolId);
 
@@ -105,6 +116,7 @@ class LessonController extends Controller
 
     /**
      * @Route("/teacher/{id}/delete-lesson", name="delete_teacher_lesson_course")
+     * @param $id
      * @return Response
      */
     public function deleteTeacherLessonCourse($id)
@@ -125,9 +137,14 @@ class LessonController extends Controller
 
         $courseId = $lesson->getCourse()->getId();
 
+        if ($this->get('time_validator')->isOneDayOld($lesson->getDateAdded())) {
+            $message = "Lekcja dodana więcej niż 12 godzin temu nie może być usunięta";
+            return $this->redirectToRoute('show_lessons', ['id' => $courseId, 'message' => $message]);
+        }
+
         $em->remove($lesson);
         $em->flush();
 
-        return $this->redirectToRoute('show_lessons', ['id'=> $courseId]);
+        return $this->redirectToRoute('show_lessons', ['id' => $courseId]);
     }
 }

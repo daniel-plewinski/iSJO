@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Form\AddCourseByTeacherType;
 use AppBundle\Form\AddCourseType;
+use AppBundle\Form\EditCourseType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +38,6 @@ class CourseController extends Controller
 
             $teacherId = $newCourse->getTeacherId()->getId();
 
-            $uniqueNumber =  $newCourse->getCourseName() . '-' . time();
-
-            $newCourse->setCourseName($uniqueNumber);
             $newCourse->setSchoolId($schoolId);
             $newCourse->setTeacherId($teacherId);
 
@@ -48,46 +46,80 @@ class CourseController extends Controller
             $em->persist($newCourse);
             $em->flush();
 
-            return $this->render("show_courses.html.twig", []);
+            return $this->redirectToRoute("show_courses");
         }
 
         return $this->render("add_course.html.twig", ['form' => $form->createView()]);
     }
 
+
     /**
-     * @Route("/add-course/{id}", name="add_course_id")
+     * @Route("/edit-course/{id}", name="edit_course")
      * @param Request $request
-     * @param $id
+     * @param Course $course
      * @return Response
      */
-    public function addCourseByTeacher(Request $request, $id)
+    public function editCourse(Request $request, Course $course)
     {
-        $newCourse = new Course();
-        $form = $this->createForm(AddCourseByTeacherType::class, $newCourse, ['user' => $this->getUser()]);
+        $user = $course->getSchoolId();
+
+        $form = $this->createForm(EditCourseType::class, $course, ['user' => $user]);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+            if ($form->isSubmitted()) {
 
-            $newCourse = $form->getData();
+                $newCourse = $form->getData();
 
-            $schoolId = $this->getUser()->getId();
+                $newCourse->setTeacherId($newCourse->getTeacherId()->getId());
 
-            $teacherId = $id;
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newCourse);
+                $em->flush();
 
-            $uniqueNumber = $newCourse->getCourseName().'-'.time();
+                return $this->redirectToRoute("show_courses");
+            }
 
-            $newCourse->setCourseName($uniqueNumber);
-            $newCourse->setSchoolId($schoolId);
-            $newCourse->setTeacherId($teacherId);
-
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($newCourse);
-            $em->flush();
-
-            return $this->redirectToRoute('show_courses');
-        }
-        return $this->render("add_course.html.twig", ['form' => $form->createView()]);
+            return $this->render("edit_course.html.twig", ['form' => $form->createView()]);
     }
-}
+
+
+        /**
+         * @Route("/add-course/{id}", name="add_course_id")
+         * @param Request $request
+         * @param $id
+         * @return Response
+         */
+        public
+        function addCourseByTeacher(Request $request, $id)
+        {
+            $newCourse = new Course();
+            $form = $this->createForm(AddCourseByTeacherType::class, $newCourse, ['user' => $this->getUser()]);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()) {
+
+                $newCourse = $form->getData();
+
+                $schoolId = $this->getUser()->getId();
+
+                $teacherId = $id;
+
+                $uniqueNumber = $newCourse->getCourseName().'-'.time();
+
+                $newCourse->setCourseName($uniqueNumber);
+                $newCourse->setSchoolId($schoolId);
+                $newCourse->setTeacherId($teacherId);
+
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newCourse);
+                $em->flush();
+
+                return $this->redirectToRoute('show_courses');
+            }
+
+            return $this->render("add_course.html.twig", ['form' => $form->createView()]);
+        }
+    }

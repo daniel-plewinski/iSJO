@@ -33,6 +33,7 @@
                 <tr>
                     <th>L.p.</th>
                     <th>Nazwa kursu</th>
+                    <th>Kod</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -43,6 +44,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ element.courseName }}</td>
+                        <td>{{ element.id }}</td>
                         <td><a href=" {{ path('show_lessons', {'id' : element.id }) }}">
                                 <button type="button" class="btn btn-info">Zobacz lekcje</button>
                             </a></td>

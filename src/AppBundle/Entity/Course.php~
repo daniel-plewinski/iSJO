@@ -56,6 +56,14 @@ class Course
     private $subject;
 
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="total_lessons", type="integer", length=4)
+     */
+    private $totalLessons;
+
+
     public function __construct() {
         $this->lessons = new ArrayCollection();
     }
@@ -200,5 +208,29 @@ class Course
     public function getLessons()
     {
         return $this->lessons;
+    }
+
+    /**
+     * Set totalLessons
+     *
+     * @param integer $totalLessons
+     *
+     * @return Course
+     */
+    public function setTotalLessons($totalLessons)
+    {
+        $this->totalLessons = $totalLessons;
+
+        return $this;
+    }
+
+    /**
+     * Get totalLessons
+     *
+     * @return integer
+     */
+    public function getTotalLessons()
+    {
+        return $this->totalLessons;
     }
 }

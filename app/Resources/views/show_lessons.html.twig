@@ -44,9 +44,15 @@
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ element.date |date('d-m-Y') }}</td>
-                            <td><a href=" {{ path('delete_teacher_lesson_course', {'id':  element.id }) }}">
+                            <td>
+
+                                {% if (isOneDayOld(element.dateAdded)) %}
+                                <a href=" {{ path('delete_teacher_lesson_course', {'id':  element.id }) }}">
                                     <button type="button" class="btn btn-danger">Usuń</button>
-                                </a></td>
+                                </a>
+                                {% endif %}
+
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
