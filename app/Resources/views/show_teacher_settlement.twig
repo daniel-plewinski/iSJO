@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Rozliczenie za {{ month }} {{ year }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Rozliczenie</a>
+                </li>
+            </ol>
+        </div>
+
+        <p>W tym misiącu miałeś X lekcji</p>
+        <p>Uczyłeś X kursów</p>
+        <p>Twoje łączne wynagrodzenie wyniosło {{ salary }} zł</p>
+
+    </div>
+
+
+
+
+{% endblock %}

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+
 /**
  * LessonRepository
  *
@@ -10,4 +12,23 @@ namespace AppBundle\Repository;
  */
 class LessonRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function teacherMonthlySalary($year, $month, $teacherId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT SUM(c.teacher_rate) AS result
+                  FROM lesson l
+                  LEFT JOIN course c ON c.id = l.course_id     
+                  WHERE MONTH(l.date)= :month AND YEAR(l.date)= :year AND c.teacher_id = :teacherId';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("teacherId", $teacherId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        return $result[0]['result'];
+
+    }
 }

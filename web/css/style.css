@@ -79,3 +79,15 @@ footer {
 .c-pagination {
 
 }
+
+.centered-table {
+    border-radius: 5px;
+    width: 50%;
+    margin: 0px auto;
+    float: none;
+    border-spacing: 50px 0;
+}
+
+.td-right-padding {
+    padding-right: 5%;
+}

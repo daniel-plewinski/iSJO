@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Wybierz okres rozliczenia
+                </h2>
+            </div>
+            <div class="col-md-2">
+
+                <h2><a href="{{ path('add_course') }}">
+                        <button type="button" class="btn btn-info">Dodaj kurs</button>
+                    </a></h2>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Podsumowanie</a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-file"></i> Lista kursów
+                </li>
+            </ol>
+        </div>
+
+
+        {{ form_start(form) }}
+        <table class="centered-table">
+            <tr>
+                <th class="td-right-padding">{{ form_label(form.year) }}</th>
+                <th>{{ form_label(form.month) }}</th>
+            </tr>
+            <tr>
+                <td class="td-right-padding">{{ form_widget(form.year, { 'value': "now"|date("Y")} ) }}</td>
+                <td>{{ form_widget(form.month, { 'value': "now"|date("m")} ) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">{{ form_widget(form.submit) }}</td>
+            </tr>
+
+        </table>
+
+
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
