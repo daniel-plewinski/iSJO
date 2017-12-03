@@ -91,3 +91,7 @@ footer {
 .td-right-padding {
     padding-right: 5%;
 }
+
+.short-td {
+    width: 400px;
+}

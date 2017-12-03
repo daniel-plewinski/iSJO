@@ -20,10 +20,45 @@
             </ol>
         </div>
 
-        <p>W tym misiącu miałeś X lekcji</p>
-        <p>Uczyłeś X kursów</p>
-        <p>Twoje łączne wynagrodzenie wyniosło {{ salary }} zł</p>
+        <h3>Podsumowanie</h3>
+        <table class="table">
+            <tr>
+                <td class="short-td">Liczba przeprowadzonych lekcji</td>
+                <th>{{ lessons | length }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Liczba kursów</td>
+                <th>{{ courseCount }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Do wypłaty brutto</td>
+                <th>{{ salary }}</th>
+            </tr>
+        </table>
 
+
+        <h3>Przeprowadzone lekcje</h3>
+
+        <table class="table">
+            <thead class="thead">
+            <tr>
+                <th>L.p.</th>
+                <th>Data lekcji</th>
+                <th>Stawka za lekcję</th>
+                <th>Nazwa kursu</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in  lessons %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ element.date | date('Y-d-m') }}</td>
+                    <td>{{ element.teacher_rate }}</td>
+                    <td>{{ element.course_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 
 

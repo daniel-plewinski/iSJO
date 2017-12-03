@@ -28,6 +28,7 @@ class SettlementController extends Controller
                 'action' => $this->generateUrl('teacher_settlement'),
             ]
         );
+
         return $this->render(
             "choose_settlement_date.html.twig",
             [
@@ -52,9 +53,26 @@ class SettlementController extends Controller
         $salary = $doctrine->getRepository('AppBundle:Lesson')
             ->teacherMonthlySalary($year, $month, $teacher);
 
+        $lessons = $doctrine->getRepository('AppBundle:Lesson')
+            ->teacherMonthlyLessons($year, $month, $teacher);
+
+        // get course count
+        $count = [];
+        foreach ($lessons as $key => $lesson) {
+            $count[] = $lesson['course_id'];
+        }
+
+        $courseCount = count(array_unique($count));
+
         return $this->render(
             "show_teacher_settlement.twig",
-            ['year'=>$year, 'month'=>$month, 'salary'=> $salary]
+            [
+                'year' => $year,
+                'month' => $month,
+                'salary' => $salary,
+                'lessons' => $lessons,
+                'courseCount'=> $courseCount
+            ]
         );
     }
 }

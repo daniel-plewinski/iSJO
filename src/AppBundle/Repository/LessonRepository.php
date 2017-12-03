@@ -29,6 +29,26 @@ class LessonRepository extends \Doctrine\ORM\EntityRepository
         $result = $stmt->fetchAll();
 
         return $result[0]['result'];
+    }
+
+    public function teacherMonthlyLessons($year, $month, $teacherId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT *
+                  FROM lesson l
+                  LEFT JOIN course c ON c.id = l.course_id     
+                  WHERE MONTH(l.date)= :month AND YEAR(l.date)= :year AND c.teacher_id = :teacherId';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("teacherId", $teacherId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        return $result;
 
     }
+
 }
