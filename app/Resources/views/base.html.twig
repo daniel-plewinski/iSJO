@@ -72,9 +72,13 @@
                     <li>
                         <a href="{{ path('show_courses') }}"><i class="fa fa-fw fa-table"></i> Kursy</a>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-edit"></i> Rozliczenia</a>
-                    </li>
+                    <li><!-- Link with dropdown items -->
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><i class="fa fa-fw fa-edit"></i>Rozliczenia</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li><a href="{{ path('school_settlement_date')}}"><i class="fa fa-fw fa-edit"></i>Rozliczenie nauczyciela</a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-edit"></i>Zestawienie zbiorcze</a></li>
+                    </ul>
+
                 {% else %}
                     <li>
                         <a href="{{ path('index_teacher') }}"><i class="fa fa-fw fa-dashboard"></i> Podsumowanie</a>

@@ -2,13 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Lesson;
 use AppBundle\Form\ChooseSettlementDateType;
-use DateTime;
+use AppBundle\Form\ChooseTeacherSettlementDateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +22,7 @@ class SettlementController extends Controller
             ChooseSettlementDateType::class,
             null,
             [
-                'action' => $this->generateUrl('teacher_settlement'),
+                'action' => $this->generateUrl('teacher-settlement'),
             ]
         );
 
@@ -38,7 +35,7 @@ class SettlementController extends Controller
     }
 
     /**
-     * @Route("/teacher/settlement", name="teacher_settlement")
+     * @Route("/teacher/settlement", name="teacher-settlement")
      * @param Request $request
      * @return Response
      */
@@ -71,7 +68,76 @@ class SettlementController extends Controller
                 'month' => $month,
                 'salary' => $salary,
                 'lessons' => $lessons,
-                'courseCount'=> $courseCount
+                'courseCount' => $courseCount,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/settlement_date", name="school_settlement_date")
+     * @param Request $request
+     * @return Response
+     */
+    public function chooseSchoolSettlementDate(Request $request)
+    {
+        $user = $this->getUser()->getId();
+
+        $form = $this->createForm(
+            ChooseTeacherSettlementDateType::class,
+            null,
+            [
+                'user' => $user,
+                'action' => $this->generateUrl('school_settlement'),
+            ]
+        );
+
+
+        return $this->render(
+            "choose_school_settlement_date.html.twig",
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/settlement", name="school_settlement")
+     * @param Request $request
+     * @return Response
+     */
+    public function showSchoolSettlement(Request $request)
+    {
+        $postData = $request->request->get('appbundle_user');
+
+        $year = $postData['year'];
+        $month = $postData['month'];
+        $teacher = $postData['teacherId'];
+
+        $doctrine = $this->getDoctrine();
+        $salary = $doctrine->getRepository('AppBundle:Lesson')
+            ->teacherMonthlySalary($year, $month, $teacher);
+
+        dump($salary);
+
+        $lessons = $doctrine->getRepository('AppBundle:Lesson')
+            ->teacherMonthlyLessons($year, $month, $teacher);
+
+        // get course count
+        $count = [];
+        foreach ($lessons as $key => $lesson) {
+            $count[] = $lesson['course_id'];
+        }
+
+        $courseCount = count(array_unique($count));
+
+        return $this->render(
+            "show_teacher_settlement.twig",
+            [
+                'year' => $year,
+                'month' => $month,
+                'salary' => $salary,
+                'lessons' => $lessons,
+                'courseCount' => $courseCount,
             ]
         );
     }

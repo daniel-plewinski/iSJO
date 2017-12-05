@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Rozliczenie za {{ month }} {{ year }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Rozliczenie</a>
+                </li>
+            </ol>
+        </div>
+
+        <h3>Podsumowanie</h3>
+        <table class="table">
+            <tr>
+                <td class="short-td">Liczba przeprowadzonych lekcji</td>
+                <th>{{ lessons | length }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Liczba kursów</td>
+                <th>{{ courseCount }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Do wypłaty brutto</td>
+                <th>{{ salary }}</th>
+            </tr>
+        </table>
+
+
+        <h3>Przeprowadzone lekcje</h3>
+
+        <table class="table">
+            <thead class="thead">
+            <tr>
+                <th>L.p.</th>
+                <th>Data lekcji</th>
+                <th>Stawka za lekcję</th>
+                <th>Nazwa kursu</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in  lessons %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ element.date | date('Y-d-m') }}</td>
+                    <td>{{ element.teacher_rate }}</td>
+                    <td>{{ element.course_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+{% endblock %}
