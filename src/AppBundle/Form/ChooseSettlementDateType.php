@@ -10,8 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ChooseSettlementDateType extends AbstractType
 {
 
-
-
     /**
      * {@inheritdoc}
      */

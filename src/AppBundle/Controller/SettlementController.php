@@ -117,8 +117,6 @@ class SettlementController extends Controller
         $salary = $doctrine->getRepository('AppBundle:Lesson')
             ->teacherMonthlySalary($year, $month, $teacher);
 
-        dump($salary);
-
         $lessons = $doctrine->getRepository('AppBundle:Lesson')
             ->teacherMonthlyLessons($year, $month, $teacher);
 
@@ -138,6 +136,66 @@ class SettlementController extends Controller
                 'salary' => $salary,
                 'lessons' => $lessons,
                 'courseCount' => $courseCount,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/overview-settlement-date", name="overview_settlement_date")
+     * @param Request $request
+     * @return Response
+     */
+    public function chooseOverviewSettlementDate(Request $request)
+    {
+        $form = $this->createForm(
+            ChooseSettlementDateType::class,
+            null,
+            [
+                'action' => $this->generateUrl('overview-settlement'),
+            ]
+        );
+
+        return $this->render(
+            "choose_overview_settlement_date.html.twig",
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/overview-settlement", name="overview-settlement")
+     * @param Request $request
+     * @return Response
+     */
+    public function showOverviewSettlement(Request $request)
+    {
+        $postData = $request->request->get('choose_settlement_date');
+        $year = $postData['year'];
+        $month = $postData['month'];
+        $schoolId = $this->getUser()->getId();
+
+        $doctrine = $this->getDoctrine();
+        $totalSalary = $doctrine->getRepository('AppBundle:Lesson')
+            ->salaryOfAllTeachers($year, $month, $schoolId);
+        $courseCount = $doctrine->getRepository('AppBundle:Lesson')
+            ->countCourses($year, $month, $schoolId);
+        $lessonCount = $doctrine->getRepository('AppBundle:Lesson')
+            ->countLessons($year, $month, $schoolId);
+
+        $salaryByTeachers = $doctrine->getRepository('AppBundle:Lesson')
+            ->salaryByTeachers($year, $month, $schoolId);
+
+
+        return $this->render(
+            "show_overview_settlement.html.twig",
+            [
+                'year' => $year,
+                'month' => $month,
+                'totalSalary' => $totalSalary,
+                'courseCount' => $courseCount,
+                'lessonCount' => $lessonCount,
+                'salaryByTeachers' => $salaryByTeachers,
             ]
         );
     }

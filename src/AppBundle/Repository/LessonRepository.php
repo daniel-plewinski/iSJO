@@ -47,7 +47,77 @@ class LessonRepository extends \Doctrine\ORM\EntityRepository
         $result = $stmt->fetchAll();
 
         return $result;
-
     }
 
+    public function salaryOfAllTeachers($year, $month, $schoolId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT SUM(c.teacher_rate) AS result FROM lesson l
+                LEFT JOIN course c ON c.id = l.course_id
+                WHERE MONTH(l.date)= :month AND YEAR(l.date)= :year AND c.school_id = :schoolId';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("schoolId", $schoolId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        return $result[0]['result'];
+    }
+
+
+    public function countCourses($year, $month, $schoolId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT COUNT(DISTINCT l.course_id) AS result FROM lesson l 
+                LEFT JOIN course c ON c.id = l.course_id 
+                WHERE MONTH(l.date)= 12 AND YEAR(l.date)= 2017 AND c.school_id = 3';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("schoolId", $schoolId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        return $result[0]['result'];
+    }
+
+    public function countLessons($year, $month, $schoolId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT COUNT(*) AS result FROM lesson l 
+                LEFT JOIN course c ON c.id = l.course_id 
+                WHERE MONTH(l.date)= 12 AND YEAR(l.date)= 2017 AND c.school_id = 3';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("schoolId", $schoolId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        return $result[0]['result'];
+    }
+
+    public function salaryByTeachers($year, $month, $schoolId)
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT u.name, SUM(c.teacher_rate) AS salary
+                FROM lesson l
+                LEFT JOIN fos_user u ON l.teacher_id = u.id
+                LEFT JOIN course c ON c.id = l.course_id     
+                WHERE MONTH(l.date)= :month AND YEAR(l.date)= :year AND l.school_id = :schoolId
+                GROUP BY u.name';
+
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue("year", $year);
+        $stmt->bindValue("month", $month);
+        $stmt->bindValue("schoolId", $schoolId);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 }

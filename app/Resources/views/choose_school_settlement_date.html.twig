@@ -18,13 +18,6 @@
                     Wybierz okres rozliczenia
                 </h2>
             </div>
-            <div class="col-md-2">
-
-                <h2><a href="{{ path('add_course') }}">
-                        <button type="button" class="btn btn-info">Dodaj kurs</button>
-                    </a></h2>
-
-            </div>
         </div>
 
         <div class="row">
@@ -48,6 +41,15 @@
             <tr>
                 <td class="td-right-padding">{{ form_widget(form.year, { 'value': "now"|date("Y")} ) }}</td>
                 <td>{{ form_widget(form.month, { 'value': "now"|date("m")} ) }}</td>
+            </tr>
+            <tr>
+               <td>{{ form_widget(form.month, { 'value': "now"|date("m")} ) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">{{ form_label(form.teacherId) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">{{ form_widget(form.teacherId) }}</td>
             </tr>
             <tr>
                 <td colspan="2" class="text-center">{{ form_widget(form.submit) }}</td>

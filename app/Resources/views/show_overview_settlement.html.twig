@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-md-10">
+                <h2>
+                    Rozliczenie za {{ month }} {{ year }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="index.html">Rozliczenie</a>
+                </li>
+            </ol>
+        </div>
+
+        <h3>Podsumowanie</h3>
+        <table class="table">
+            <tr>
+                <td class="short-td">Razem do wypłaty brutto</td>
+                <th>{{ totalSalary }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Łączna liczba kursów</td>
+                <th>{{ courseCount }}</th>
+            </tr>
+            <tr>
+                <td class="short-td">Łączna liczba lekcji</td>
+                <th>{{ lessonCount }}</th>
+            </tr>
+        </table>
+
+        <h3>Wynagrodzenie nauczycieli</h3>
+        <table class="table">
+            {% for index,  key in salaryByTeachers %}
+            <tr>
+                <td class="short-td">{{ key['name'] }}</td>
+                <th>{{ key['salary'] }}</th>
+            </tr>
+          {% endfor %}
+        </table>
+
+
+
+
+
+{% endblock %}
