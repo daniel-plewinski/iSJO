@@ -44,6 +44,7 @@ class SchoolController extends Controller
      */
     public function addTeacherAction(SessionInterface $session, Request $request)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
         $newTeacher = new User();
         $form = $this->createForm(AddTeacherType::class, $newTeacher);
@@ -91,6 +92,7 @@ class SchoolController extends Controller
      */
     public function editTeacherAction(Request $request, User $user)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
         $form = $this->createForm(AddTeacherType::class, $user);
         $form->handleRequest($request);
@@ -115,6 +117,7 @@ class SchoolController extends Controller
      */
     public function showTeachersAction()
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
         $em = $this->getDoctrine()->getManager();
         $teachers = $em->getRepository('AppBundle:User')
@@ -131,6 +134,7 @@ class SchoolController extends Controller
      */
     public function showCoursesAction(Request $request)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
 
         // Cannot user repository as is not supported by knp_paginator
         $schoolId = $this->getUser()->getId();
@@ -167,6 +171,8 @@ class SchoolController extends Controller
      */
     public function showLessonsAction(Request $request, Course $course)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $courseId = $course->getId();
 
         // Cannot user repository as is not supported by knp_paginator

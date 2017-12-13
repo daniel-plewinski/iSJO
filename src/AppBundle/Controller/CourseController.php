@@ -25,6 +25,9 @@ class CourseController extends Controller
      */
     public function addCourse(Request $request)
     {
+
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $newCourse = new Course();
         $form = $this->createForm(AddCourseType::class, $newCourse, ['user' => $this->getUser()]);
 
@@ -61,6 +64,8 @@ class CourseController extends Controller
      */
     public function editCourse(Request $request, Course $course)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $user = $course->getSchoolId();
 
         $form = $this->createForm(EditCourseType::class, $course, ['user' => $user]);
@@ -92,6 +97,8 @@ class CourseController extends Controller
      */
     function addCourseByTeacher(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $newCourse = new Course();
         $form = $this->createForm(AddCourseByTeacherType::class, $newCourse, ['user' => $this->getUser()]);
 

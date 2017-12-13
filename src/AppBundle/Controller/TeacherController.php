@@ -32,6 +32,8 @@ class TeacherController extends Controller
      */
     public function showTeacherCoursesAction()
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $em = $this->getDoctrine()->getManager();
         $courses = $em->getRepository('AppBundle:Course')
             ->findByTeacherId($this->getUser()->getId());
@@ -48,9 +50,11 @@ class TeacherController extends Controller
      */
     public function showLessonsAction(Request $request, Course $course)
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+        
         $courseId = $course->getId();
 
-        // Cannot user repository as is not supported by knp_paginator
+        // Cannot use repository as it is not supported by knp_paginator
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT u FROM AppBundle:Lesson u WHERE u.course = $courseId";
         $lessons = $em->createQuery($dql);
@@ -62,11 +66,10 @@ class TeacherController extends Controller
             10/*limit per page*/
         );
 
-        $courseName = $course->getCourseName();
 
         return $this->render(
             "show_lessons.html.twig",
-            ['lessons' => $lessons, 'courseName' => $courseName, 'pagination' => $pagination]
+            ['lessons' => $lessons, 'course' => $course, 'pagination' => $pagination]
         );
     }
 }

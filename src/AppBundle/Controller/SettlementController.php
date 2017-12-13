@@ -13,11 +13,12 @@ class SettlementController extends Controller
 {
     /**
      * @Route("/teacher/settlement-date", name="teacher_settlement_date")
-     * @param Request $request
      * @return Response
      */
-    public function chooseSettlementDate(Request $request)
+    public function chooseSettlementDate()
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $form = $this->createForm(
             ChooseSettlementDateType::class,
             null,
@@ -41,6 +42,8 @@ class SettlementController extends Controller
      */
     public function showTeacherSettlement(Request $request)
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $postData = $request->request->get('choose_settlement_date');
         $year = $postData['year'];
         $month = $postData['month'];
@@ -75,11 +78,12 @@ class SettlementController extends Controller
 
     /**
      * @Route("/school/settlement_date", name="school_settlement_date")
-     * @param Request $request
      * @return Response
      */
-    public function chooseSchoolSettlementDate(Request $request)
+    public function chooseSchoolSettlementDate()
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $user = $this->getUser()->getId();
 
         $form = $this->createForm(
@@ -107,6 +111,8 @@ class SettlementController extends Controller
      */
     public function showSchoolSettlement(Request $request)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $postData = $request->request->get('appbundle_user');
 
         $year = $postData['year'];
@@ -142,11 +148,12 @@ class SettlementController extends Controller
 
     /**
      * @Route("/school/overview-settlement-date", name="overview_settlement_date")
-     * @param Request $request
      * @return Response
      */
-    public function chooseOverviewSettlementDate(Request $request)
+    public function chooseOverviewSettlementDate()
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $form = $this->createForm(
             ChooseSettlementDateType::class,
             null,

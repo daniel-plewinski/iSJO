@@ -22,6 +22,9 @@ class LessonController extends Controller
      */
     public function addTeacherLesson(Request $request)
     {
+
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $newLesson = new Lesson();
         $form = $this->createForm(TeacherLessonType::class, $newLesson, ['user' => $this->getUser()]);
 
@@ -70,6 +73,8 @@ class LessonController extends Controller
      */
     public function addTeacherLessonCourse(Request $request, Course $course)
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $newLesson = new Lesson();
         $form = $this->createForm(CourseLessonType::class, $newLesson);
 
@@ -121,6 +126,8 @@ class LessonController extends Controller
      */
     public function deleteTeacherLessonCourse($id)
     {
+        $this->denyAccessUnlessGranted(['ROLE_TEACHER'], null, 'Musisz się zalogować');
+
         $em = $this->getDoctrine()->getManager();
         $lesson = $em->getRepository('AppBundle:Lesson')->find($id);
 
@@ -155,6 +162,8 @@ class LessonController extends Controller
      */
     public function deleteSchoolLessonCourse($id)
     {
+        $this->denyAccessUnlessGranted(['ROLE_SCHOOL'], null, 'Musisz się zalogować');
+
         $em = $this->getDoctrine()->getManager();
         $lesson = $em->getRepository('AppBundle:Lesson')->find($id);
 
