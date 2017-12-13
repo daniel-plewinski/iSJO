@@ -42,7 +42,7 @@
                     <tbody>
                     {% for element in pagination %}
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td>{{ pagination.getPaginationData.firstItemNumber + loop.index - 1 }}</td>
                             <td>{{ element.date |date('d-m-Y') }}</td>
                             <td>
 
