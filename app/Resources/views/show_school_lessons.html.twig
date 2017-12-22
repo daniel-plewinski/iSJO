@@ -39,7 +39,7 @@
 
                     {% for element in pagination %}
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td>{{  pagination.getPaginationData.firstItemNumber }}</td>
                             <td>{{ element.date |date('d-m-Y') }}</td>
                             <td>
                                 <a href=" {{ path('delete_school_lesson_course', {'id':  element.id }) }}">

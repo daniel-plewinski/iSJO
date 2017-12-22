@@ -53,7 +53,7 @@
 
                 {% for element in pagination %}
                     <tr>
-                        <td>{{ loop.index }}</td>
+                        <td>{{  pagination.getPaginationData.firstItemNumber }}</td>
                         <td>{{ element.courseName }}</td>
                         <td>{{ element.id }}</td>
                         <td>{{ element.totalLessons }}</td>
