@@ -112,7 +112,7 @@ class CourseController extends Controller
 
             $teacherId = $id;
 
-            $uniqueNumber = $newCourse->getCourseName().'-'.time();
+            $uniqueNumber = $newCourse->getCourseName() . '-' . time();
 
             $newCourse->setCourseName($uniqueNumber);
             $newCourse->setSchoolId($schoolId);

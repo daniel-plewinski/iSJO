@@ -13,11 +13,12 @@
     <input type="text" class="form-control" placeholder="Nazwa użytkownika" id="username" name="_username"
            value="{{ last_username }}" required="required" autofocus=""/>
     <input type="password" class="form-control" placeholder="Hasło" id="password" name="_password" required="required"/>
-
+    <br>
     <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
     <label for="remember_me">{{ 'Zapamiętaj mnie'|trans }}</label>
 
-    <input type="submit" class="btn btn-lg btn-success btn-block" id="_submit" name="_submit" value="{{ 'Dalej'|trans }}"/>
+    <input type="submit" class="btn btn-lg btn-success btn-block" id="_submit" name="_submit"
+           value="{{ 'Dalej'|trans }}"/>
     <br>
     <center><a href="{{ path("fos_user_registration_register") }}">Rejestracja</a></center>
 </form>

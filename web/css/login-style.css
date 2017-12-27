@@ -58,3 +58,10 @@ body {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.form-register {
+}
+
+input[type="password"] {
+    margin-bottom:0 !important;
+}

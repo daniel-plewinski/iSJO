@@ -28,4 +28,20 @@ class RoleRedirectController extends Controller
             return $this->redirectToRoute("index_teacher");
         }
     }
+
+
+    /**
+     * @Route("/register/confirmed")
+     */
+    public function confirmedRedirect() {
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_SCHOOL')) {
+
+            return $this->redirectToRoute("index_school");
+
+        } elseif ($this->get('security.authorization_checker')->isGranted('ROLE_TEACHER')) {
+
+            return $this->redirectToRoute("index_teacher");
+        }
+    }
+
 }
